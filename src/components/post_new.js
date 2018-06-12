@@ -12,13 +12,21 @@ class NewPost extends Component{
                     type="text"
                     {...field.input}
                 />
+                {field.meta.error}
             </div>
         );
     }
 
+    onSubmit(values){
+        console.log(values);
+    }
+
     render(){
+
+        const {handleSubmit} = this.props;
+
         return(
-            <form>
+            <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                 <Field 
                     name="title"
                     label="Title:"
@@ -34,13 +42,24 @@ class NewPost extends Component{
                     name="content"
                     component={this.renderField}
                 />
+                <button type="submit" className="btn btn-primary">Save</button>
             </form>
         );
     }
 }
 
+function validate(values){
+    const errors = {};
+
+    if(!values.title)
+        errors.title = "Enter some title!!!";
+
+    return errors;
+}
+
 export default reduxForm(
 {
+    validate,
     form:'PostNewForm'
 }
 )(NewPost);
