@@ -7,7 +7,11 @@ class PostShow extends Component{
 
     componentDidMount(){
         const {id} = this.props.match.params; 
-        this.props.fetchPost();
+        this.props.fetchPost(id);
+    }
+
+    helper(){
+
     }
 
     render(){
@@ -20,7 +24,7 @@ class PostShow extends Component{
 }
 
 function mapStateToProps({posts},ownProps){
-    return {posts};
+    return {post : posts[ownProps.match.params]};
 }
 
-export default connect(null,{fetchPost})(PostShow);
+export default connect(mapStateToProps,{fetchPost})(PostShow);
